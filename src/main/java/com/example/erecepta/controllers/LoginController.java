@@ -1,13 +1,29 @@
 package com.example.erecepta.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.erecepta.dto.LoginRequest;
+import com.example.erecepta.dto.LoginResponse;
+import com.example.erecepta.services.LoginService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/login")
 public class LoginController {
 
-    @GetMapping("/test")
-    public String test() {
-        return "Spring Boot działa!";
+    private final LoginService loginService;
+
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
+    @PostMapping("/pacjent")
+    public LoginResponse loginPacjent(@RequestBody LoginRequest request) {
+
+        LoginResponse response = loginService.loginPacjent(request);
+
+        if (response == null) {
+            throw new RuntimeException("Błędny login lub hasło");
+        }
+
+        return response;
     }
 }

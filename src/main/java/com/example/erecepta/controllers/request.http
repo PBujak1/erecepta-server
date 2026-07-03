@@ -1,0 +1,7 @@
+POST http://localhost:8080/api/login/pacjent
+Content-Type: application/json
+
+{
+  "pesel": "21474836478",
+  "haslo": "Nowak"
+}
