@@ -1,5 +1,5 @@
-POST http://localhost:8080/api/login/pacjent
-Content-Type: application/json
+GET http://localhost:8080/api/pacjent/21474836476
+Accept: application/json
 
 {
   "pesel": "21474836478",

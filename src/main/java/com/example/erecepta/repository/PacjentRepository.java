@@ -9,4 +9,6 @@ public interface PacjentRepository extends JpaRepository<Pacjent, Integer> {
 
     Optional<Pacjent> findByPeselAndNazwisko(String pesel, String nazwisko);
 
+    Optional<Pacjent> findByPesel(String pesel);
+
 }
