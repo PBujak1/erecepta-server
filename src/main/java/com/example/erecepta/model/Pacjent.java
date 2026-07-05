@@ -23,7 +23,7 @@ public class Pacjent {
     @Column(name = "Plec")
     private String plec;
 
-    @Column(name = "numerTelefonu")
+    @Column(name = "NumerTelefonu")
     private Integer numerTelefonu;
 
     @Column(name = "Email")
