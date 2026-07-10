@@ -5,46 +5,54 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "lekarz")
 public class Lekarz {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDlekarza")
+    @Column(name = "idlekarza")
     private Integer idLekarza;
 
-    @Column(name = "Imie")
+    @Column(name = "imie")
     private String imie;
 
-    @Column(name = "Nazwisko")
+    @Column(name = "nazwisko")
     private String nazwisko;
 
-    @Column(name = "NrPZW")
-    private String nrPZW;
+    @Column(name = "pesel")
+    private String pesel;
 
-    @Column(name = "Pesel")
-    private Integer pesel;
+    @Column(name = "nrpzw")
+    private Integer nrPzw;
 
     @Column(name = "adres")
     private String adres;
 
-    @Column(name = "NumerTelefonu")
-    private String numerTelefonu;
+    @Column(name = "numerTelefonu")
+    private Integer numerTelefonu;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
     @Column(name = "wiek")
     private Integer wiek;
 
-    @Column(name = "Plec")
+    @Column(name = "plec")
     private String plec;
 
+    @Lob
     @Column(name = "avatar")
-    private String avatar;
+    private byte[] avatar;
 
-    @Column(name = "IDSpecjalizacji")
+    @Column(name = "idspecjalizacji")
     private Integer idSpecjalizacji;
 
     @Column(name = "opis")
     private String opis;
+
+    @Column(name = "specjalizacja")
+    private String specjalizacja;
+
+    public Lekarz() {
+    }
 
     public Integer getIdLekarza() {
         return idLekarza;
@@ -70,20 +78,20 @@ public class Lekarz {
         this.nazwisko = nazwisko;
     }
 
-    public String getNrPZW() {
-        return nrPZW;
-    }
-
-    public void setNrPZW(String nrPZW) {
-        this.nrPZW = nrPZW;
-    }
-
-    public Integer getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(Integer pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
+    }
+
+    public Integer getNrPzw() {
+        return nrPzw;
+    }
+
+    public void setNrPzw(Integer nrPzw) {
+        this.nrPzw = nrPzw;
     }
 
     public String getAdres() {
@@ -94,11 +102,11 @@ public class Lekarz {
         this.adres = adres;
     }
 
-    public String getNumerTelefonu() {
+    public Integer getNumerTelefonu() {
         return numerTelefonu;
     }
 
-    public void setNumerTelefonu(String numerTelefonu) {
+    public void setNumerTelefonu(Integer numerTelefonu) {
         this.numerTelefonu = numerTelefonu;
     }
 
@@ -126,11 +134,11 @@ public class Lekarz {
         this.plec = plec;
     }
 
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 
@@ -148,5 +156,13 @@ public class Lekarz {
 
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+    public String getSpecjalizacja() {
+        return specjalizacja;
+    }
+
+    public void setSpecjalizacja(String specjalizacja) {
+        this.specjalizacja = specjalizacja;
     }
 }
