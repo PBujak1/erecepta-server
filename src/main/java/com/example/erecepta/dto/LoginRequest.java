@@ -1,8 +1,8 @@
 package com.example.erecepta.dto;
 
 public class LoginRequest {
+    private String nazwisko;
     private String pesel;
-    private String haslo;
 
     public LoginRequest() {
 
@@ -16,11 +16,11 @@ public class LoginRequest {
         this.pesel = pesel;
     }
 
-    public String getHaslo() {
-        return haslo;
+    public String getNazwisko() {
+        return nazwisko;
     }
 
-    public void setHaslo(String haslo) {
-        this.haslo = haslo;
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
     }
 }

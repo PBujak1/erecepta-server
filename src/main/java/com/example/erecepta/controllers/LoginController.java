@@ -18,6 +18,8 @@ public class LoginController {
     @PostMapping("/pacjent")
     public LoginResponse loginPacjent(@RequestBody LoginRequest request) {
 
+        System.out.println("nazwisko: " + request.getNazwisko());
+        System.out.println("PESEL: " + request.getPesel());
         LoginResponse response = loginService.loginPacjent(request);
 
         if (response == null) {

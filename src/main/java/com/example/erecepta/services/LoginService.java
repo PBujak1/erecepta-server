@@ -17,7 +17,7 @@ public class LoginService {
 
     public LoginResponse loginPacjent(LoginRequest request) {
 
-        Pacjent pacjent = pacjentRepository.findByPeselAndNazwisko(request.getPesel(), request.getHaslo()).orElse(null);
+        Pacjent pacjent = pacjentRepository.findByNazwiskoAndPesel(request.getNazwisko(), request.getPesel()).orElse(null);
 
         if (pacjent == null) {
             return null;
