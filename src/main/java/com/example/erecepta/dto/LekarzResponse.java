@@ -30,6 +30,11 @@ public class LekarzResponse {
         this.numerTelefonu = numerTelefonu;
     }
 
+    public LekarzResponse(String imie, String nazwisko) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+    }
+
     public String getImie() {
         return imie;
     }

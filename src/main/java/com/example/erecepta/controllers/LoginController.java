@@ -1,5 +1,6 @@
 package com.example.erecepta.controllers;
 
+import com.example.erecepta.dto.LekarzResponse;
 import com.example.erecepta.dto.LoginRequest;
 import com.example.erecepta.dto.LoginResponse;
 import com.example.erecepta.dto.WizytaResponse;
@@ -57,5 +58,11 @@ public class LoginController {
         return wizytaService.getWizytyPacjenta(
                 loginService.getPacjentIdByPesel(pesel)
         );
+    }
+
+    @GetMapping("/pacjent/{pesel}/lekarzePacjenta")
+    public List<LekarzResponse> getLekarzePacjenta(@PathVariable String pesel) {
+
+        return wizytaService.getLekarzePacjenta(loginService.getPacjentIdByPesel(pesel));
     }
 }
