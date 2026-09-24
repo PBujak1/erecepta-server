@@ -16,11 +16,9 @@ import java.util.List;
 public class LoginController {
 
     private final LoginService loginService;
-    private final WizytaService wizytaService;
 
-    public LoginController(LoginService loginService, WizytaService wizytaService) {
+    public LoginController(LoginService loginService) {
         this.loginService = loginService;
-        this.wizytaService = wizytaService;
     }
 
     @PostMapping("/pacjent")
@@ -49,20 +47,5 @@ public class LoginController {
         }
 
         return response;
-    }
-
-
-    @GetMapping("/pacjent/{pesel}/wizyty")
-    public List<WizytaResponse> getWizytyPacjenta(@PathVariable String pesel) {
-
-        return wizytaService.getWizytyPacjenta(
-                loginService.getPacjentIdByPesel(pesel)
-        );
-    }
-
-    @GetMapping("/pacjent/{pesel}/lekarzePacjenta")
-    public List<LekarzResponse> getLekarzePacjenta(@PathVariable String pesel) {
-
-        return wizytaService.getLekarzePacjenta(loginService.getPacjentIdByPesel(pesel));
     }
 }

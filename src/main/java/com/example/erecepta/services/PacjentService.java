@@ -29,4 +29,13 @@ public class PacjentService {
                 pacjent.getPesel()
         );
     }
+
+
+    public Integer getPacjentIdByPesel(String pesel) {
+
+        Pacjent pacjent = pacjentRepository.findByPesel(pesel)
+                .orElseThrow(() -> new RuntimeException("Nie znaleziono pacjenta"));
+
+        return pacjent.getIdPacjenta();
+    }
 }

@@ -34,13 +34,6 @@ public class LoginService {
         );
     }
 
-    public Integer getPacjentIdByPesel(String pesel) {
-
-        Pacjent pacjent = pacjentRepository.findByPesel(pesel)
-                .orElseThrow(() -> new RuntimeException("Nie znaleziono pacjenta"));
-
-        return pacjent.getIdPacjenta();
-    }
 
     public LoginResponse getLekarzByNazwiskoAndPesel(LoginRequest request) {
         Lekarz lekarz = lekarzRepository.findByNazwiskoAndPesel(request.getNazwisko(), request.getPesel()).orElse(null);
