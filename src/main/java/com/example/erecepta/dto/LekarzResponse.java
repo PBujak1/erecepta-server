@@ -1,5 +1,10 @@
 package com.example.erecepta.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class LekarzResponse {
     private String imie;
     private String nazwisko;
@@ -35,59 +40,4 @@ public class LekarzResponse {
         this.nazwisko = nazwisko;
     }
 
-    public String getImie() {
-        return imie;
-    }
-
-    public void setImie(String imie) {
-        this.imie = imie;
-    }
-
-    public String getNazwisko() {
-        return nazwisko;
-    }
-
-    public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
-    }
-
-    public Integer getNrPZW() {
-        return nrPZW;
-    }
-
-    public void setNrPZW(Integer nrPZW) {
-        this.nrPZW = nrPZW;
-    }
-
-    public String getSpecjalizacja() {
-        return specjalizacja;
-    }
-
-    public void setSpecjalizacja(String specjalizacja) {
-        this.specjalizacja = specjalizacja;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAdres() {
-        return adres;
-    }
-
-    public void setAdres(String adres) {
-        this.adres = adres;
-    }
-
-    public Integer getNumerTelefonu() {
-        return numerTelefonu;
-    }
-
-    public void setNumerTelefonu(Integer numerTelefonu) {
-        this.numerTelefonu = numerTelefonu;
-    }
 }

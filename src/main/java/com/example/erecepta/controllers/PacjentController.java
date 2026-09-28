@@ -1,9 +1,6 @@
 package com.example.erecepta.controllers;
 
-import com.example.erecepta.dto.LekarzResponse;
-import com.example.erecepta.dto.PacjentResponse;
-import com.example.erecepta.dto.ReceptaResponse;
-import com.example.erecepta.dto.WizytaResponse;
+import com.example.erecepta.dto.*;
 import com.example.erecepta.services.PacjentService;
 import com.example.erecepta.services.ReceptaService;
 import com.example.erecepta.services.WizytaService;
@@ -49,5 +46,10 @@ public class PacjentController {
     @GetMapping("/{pesel}/dawkowanie")
     public List<ReceptaResponse> getDawkowanie(@PathVariable String pesel) {
         return receptaService.getRecepta(pacjentService.getPacjentIdByPesel(pesel));
+    }
+
+    @GetMapping("/{pesel}/historia")
+    public List<HistoriaPacjentaResponse> getHistoriaPacjenta(@PathVariable String pesel) {
+        return wizytaService.getHistoriaPacjenta(pacjentService.getPacjentIdByPesel(pesel));
     }
 }

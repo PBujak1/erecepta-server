@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface ReceptaRepository extends JpaRepository<Recepta, Integer> {
     List<Recepta> findByIDPacjenta(Integer idPacjenta);
+    Optional<Recepta> findByIDRecepty(Integer idRecepty);
 }

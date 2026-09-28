@@ -11,4 +11,6 @@ public interface PacjentRepository extends JpaRepository<Pacjent, Integer> {
 
     Optional<Pacjent> findByPesel(String pesel);
 
+    Optional<Pacjent> findByIdPacjenta(Integer idPacjenta);
+
 }
