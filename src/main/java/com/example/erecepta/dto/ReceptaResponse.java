@@ -10,7 +10,6 @@ public class ReceptaResponse {
     private String nazwaLeku;
     private Integer liczbaOpakowan;
     private Integer dawkowanie;
-    private Integer idRecepty;
 
     public ReceptaResponse() {
     }
