@@ -11,6 +11,7 @@ import com.example.erecepta.repository.ReceptaRepository;
 import com.example.erecepta.repository.WizytaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ public class WizytaService {
         List<Wizyta> wizyty = wizytaRepository.findByIDPacjenta(idPacjenta);
 
         return wizyty.stream()
+                .filter(wizyta -> !wizyta.getDataWizyty().isAfter(LocalDate.now()))
                 .map(wizyta -> new WizytaResponse(wizyta.getDataWizyty()))
                 .toList();
     }
@@ -76,6 +78,33 @@ public class WizytaService {
         List<Wizyta> wizyty = wizytaRepository.findByIDPacjenta(idPacjenta);
 
         return wizyty.stream()
+                .filter(wizyta -> !wizyta.getDataWizyty().isAfter(LocalDate.now()))
+                .map(wizyta -> {
+                    Optional<Lekarz> lekarz = lekarzRepository.findByIdLekarza(wizyta.getIDLekarza());
+                    Optional<Pacjent> pacjent = pacjentRepository.findByIdPacjenta(wizyta.getIDPacjenta());
+
+                    return new HistoriaPacjentaResponse(
+                            wizyta.getDataWizyty(),
+                            lekarz.map(l ->
+                                    l.getImie() + " " + l.getNazwisko()
+                            ).orElse(null),
+
+                            pacjent.map(p ->
+                                    p.getImie() + " " + p.getNazwisko()
+                            ).orElse(null),
+
+                            wizyta.getIDRecepty()
+                    );
+                })
+                .toList();
+    }
+
+    public List<HistoriaPacjentaResponse> getNadchodzaceWizyty(Integer idPacjenta) {
+
+        List<Wizyta> wizyty = wizytaRepository.findByIDPacjenta(idPacjenta);
+
+        return wizyty.stream()
+                .filter(wizyta -> wizyta.getDataWizyty().isAfter(LocalDate.now()))
                 .map(wizyta -> {
                     Optional<Lekarz> lekarz = lekarzRepository.findByIdLekarza(wizyta.getIDLekarza());
                     Optional<Pacjent> pacjent = pacjentRepository.findByIdPacjenta(wizyta.getIDPacjenta());

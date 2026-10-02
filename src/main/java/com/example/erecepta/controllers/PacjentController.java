@@ -52,4 +52,9 @@ public class PacjentController {
     public List<HistoriaPacjentaResponse> getHistoriaPacjenta(@PathVariable String pesel) {
         return wizytaService.getHistoriaPacjenta(pacjentService.getPacjentIdByPesel(pesel));
     }
+
+    @GetMapping("/{pesel}/nadchodzaceWizyty")
+    public List<HistoriaPacjentaResponse> getNadchodzaceWizyty(@PathVariable String pesel) {
+        return wizytaService.getNadchodzaceWizyty(pacjentService.getPacjentIdByPesel(pesel));
+    }
 }
