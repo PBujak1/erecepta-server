@@ -1,6 +1,6 @@
 package com.example.erecepta.services;
 
-import com.example.erecepta.dto.PacjentResponse;
+import com.example.erecepta.dto.Responses.PacjentResponse;
 import com.example.erecepta.entity.Pacjent;
 import com.example.erecepta.repository.PacjentRepository;
 import org.springframework.stereotype.Service;

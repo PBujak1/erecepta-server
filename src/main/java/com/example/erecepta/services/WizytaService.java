@@ -1,9 +1,10 @@
 package com.example.erecepta.services;
 
-import com.example.erecepta.dto.*;
+import com.example.erecepta.dto.Responses.HistoriaPacjentaResponse;
+import com.example.erecepta.dto.Responses.LekarzResponse;
+import com.example.erecepta.dto.Responses.WizytaResponse;
 import com.example.erecepta.entity.Lekarz;
 import com.example.erecepta.entity.Pacjent;
-import com.example.erecepta.entity.Recepta;
 import com.example.erecepta.entity.Wizyta;
 import com.example.erecepta.repository.LekarzRepository;
 import com.example.erecepta.repository.PacjentRepository;

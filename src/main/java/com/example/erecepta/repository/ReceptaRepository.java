@@ -1,6 +1,5 @@
 package com.example.erecepta.repository;
 
-import com.example.erecepta.dto.ReceptaResponse;
 import com.example.erecepta.entity.Recepta;
 import org.springframework.data.jpa.repository.JpaRepository;
 

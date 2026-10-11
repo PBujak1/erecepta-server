@@ -1,8 +1,6 @@
 package com.example.erecepta.services;
 
-import com.example.erecepta.dto.LekResponse;
-import com.example.erecepta.dto.ReceptaResponse;
-import com.example.erecepta.entity.Lek;
+import com.example.erecepta.dto.Responses.ReceptaResponse;
 import com.example.erecepta.entity.Recepta;
 import com.example.erecepta.repository.LekRepository;
 import com.example.erecepta.repository.ReceptaRepository;
@@ -28,8 +26,8 @@ public class ReceptaService {
                 .map(recepta -> lekRepository.findLekByIDLeku(recepta.getIDLeku())
                         .map(lek -> new ReceptaResponse(
                             lek.getNazwa(),
-                            recepta.getLiczbaOpakowan(),
-                            recepta.getDawkowanie()
+                            recepta.getLiczbaOpakowan().toString(),
+                            recepta.getDawkowanie().toString()
                         ))
                 )
                 .flatMap(Optional::stream)

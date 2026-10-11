@@ -1,4 +1,4 @@
-package com.example.erecepta.dto;
+package com.example.erecepta.dto.Responses;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +8,13 @@ import lombok.Setter;
 public class ReceptaResponse {
 
     private String nazwaLeku;
-    private Integer liczbaOpakowan;
-    private Integer dawkowanie;
+    private String liczbaOpakowan;
+    private String dawkowanie;
 
     public ReceptaResponse() {
     }
 
-    public ReceptaResponse(String nazwaLeku, Integer liczbaOpakowan, Integer dawkowanie) {
+    public ReceptaResponse(String nazwaLeku, String liczbaOpakowan, String dawkowanie) {
         this.nazwaLeku = nazwaLeku;
         this.liczbaOpakowan = liczbaOpakowan;
         this.dawkowanie = dawkowanie;

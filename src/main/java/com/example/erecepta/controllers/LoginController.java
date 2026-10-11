@@ -1,15 +1,9 @@
 package com.example.erecepta.controllers;
 
-import com.example.erecepta.dto.LekarzResponse;
-import com.example.erecepta.dto.LoginRequest;
-import com.example.erecepta.dto.LoginResponse;
-import com.example.erecepta.dto.WizytaResponse;
-import com.example.erecepta.entity.Wizyta;
+import com.example.erecepta.dto.Requests.LoginRequest;
+import com.example.erecepta.dto.Responses.LoginResponse;
 import com.example.erecepta.services.LoginService;
-import com.example.erecepta.services.WizytaService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/login")

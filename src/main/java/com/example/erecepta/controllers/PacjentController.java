@@ -1,9 +1,11 @@
 package com.example.erecepta.controllers;
 
-import com.example.erecepta.dto.*;
+import com.example.erecepta.dto.Responses.*;
+import com.example.erecepta.services.LekarzService;
 import com.example.erecepta.services.PacjentService;
 import com.example.erecepta.services.ReceptaService;
 import com.example.erecepta.services.WizytaService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,15 +17,18 @@ public class PacjentController {
     private final PacjentService pacjentService;
     private final WizytaService wizytaService;
     private final ReceptaService receptaService;
+    private final LekarzService lekarzService;
 
     public PacjentController(
             PacjentService pacjentService,
             WizytaService wizytaService,
-            ReceptaService receptaService
+            ReceptaService receptaService,
+            LekarzService lekarzService
     ) {
         this.wizytaService = wizytaService;
         this.pacjentService = pacjentService;
         this.receptaService = receptaService;
+        this.lekarzService = lekarzService;
     }
 
     @GetMapping("/{pesel}")
@@ -56,5 +61,12 @@ public class PacjentController {
     @GetMapping("/{pesel}/nadchodzaceWizyty")
     public List<HistoriaPacjentaResponse> getNadchodzaceWizyty(@PathVariable String pesel) {
         return wizytaService.getNadchodzaceWizyty(pacjentService.getPacjentIdByPesel(pesel));
+    }
+
+    @GetMapping("/lekarze/szukaj")
+    public List<LekarzResponse> szukajLekarzy(
+            @RequestParam String fraza,
+            @RequestParam(defaultValue = "10") int limit) {
+        return lekarzService.szukajLekarzy(fraza, limit);
     }
 }

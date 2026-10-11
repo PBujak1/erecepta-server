@@ -1,7 +1,7 @@
 package com.example.erecepta.services;
 
-import com.example.erecepta.dto.LoginRequest;
-import com.example.erecepta.dto.LoginResponse;
+import com.example.erecepta.dto.Requests.LoginRequest;
+import com.example.erecepta.dto.Responses.LoginResponse;
 import com.example.erecepta.entity.Lekarz;
 import com.example.erecepta.entity.Pacjent;
 import com.example.erecepta.repository.LekarzRepository;

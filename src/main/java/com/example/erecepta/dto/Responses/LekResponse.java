@@ -1,4 +1,4 @@
-package com.example.erecepta.dto;
+package com.example.erecepta.dto.Responses;
 
 import lombok.Getter;
 import lombok.Setter;

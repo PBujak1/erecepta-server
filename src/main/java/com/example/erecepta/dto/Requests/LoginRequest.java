@@ -1,4 +1,4 @@
-package com.example.erecepta.dto;
+package com.example.erecepta.dto.Requests;
 
 public class LoginRequest {
     private String nazwisko;
