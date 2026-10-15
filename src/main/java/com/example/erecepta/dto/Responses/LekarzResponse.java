@@ -13,6 +13,7 @@ public class LekarzResponse {
     private String email;
     private String adres;
     private Integer numerTelefonu;
+    private String Pesel;
 
     public LekarzResponse() {
     }
@@ -33,6 +34,20 @@ public class LekarzResponse {
         this.email = email;
         this.adres = adres;
         this.numerTelefonu = numerTelefonu;
+    }
+
+    public LekarzResponse (
+            Integer nrPzw,
+            String email,
+            Integer telefon,
+            String opis,
+            String PESEL
+    ) {
+        this.nrPZW = nrPzw;
+        this.email = email;
+        this.adres = opis;
+        this.numerTelefonu = telefon;
+        this.Pesel = PESEL;
     }
 
     public LekarzResponse(String imie, String nazwisko) {

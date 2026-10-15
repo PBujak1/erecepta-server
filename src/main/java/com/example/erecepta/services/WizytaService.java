@@ -42,24 +42,8 @@ public class WizytaService {
     }
 
 
-    public List<LekarzResponse> getLekarzePacjenta(Integer pacjentIdByPesel) {
-        /*
-        MOJE ROZWIĄZANIE
-        1.SZUKAMY IDLEKARZA Z WIZYT DO KTÓRYCH CHODZIŁ KONKRETNY PACJENT
-        2.NA PODSTAWIE ID SZUKAMY IMIENIA I NAZWISKA LEKARZA I DODAJEMY DO LISTY
-
-        List<Wizyta> wizyty = wizytaRepository.findByIDPacjenta(pacjentIdByPesel);
-        Optional<Lekarz> lekarze = lekarzRepository.findByIdLekarza(wizyty.getFirst().getIDLekarza());
-
-        return lekarze.stream()
-                .map(lekarz -> new LekarzResponse(lekarz.getImie() + " " + lekarz.getNazwisko() ))
-                .toList();
-
-         */
-
-
-        //ROZWIĄZANIE CHATAGPT
-        List<Wizyta> wizyty = wizytaRepository.findByIDPacjenta(pacjentIdByPesel);
+    public List<LekarzResponse> getLekarzePacjenta(Integer idPacjenta) {
+        List<Wizyta> wizyty = wizytaRepository.findByIDPacjenta(idPacjenta);
 
         return wizyty.stream()
                 .map(Wizyta::getIDLekarza)

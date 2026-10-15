@@ -25,4 +25,6 @@ public interface LekarzRepository extends JpaRepository<Lekarz, Integer> {
         ORDER BY l.nazwisko, l.imie
     """)
     List<Lekarz> szukajLekarzy(@Param("fraza") String fraza, Pageable pageable);
+
+    Optional<Lekarz> findByImieAndNazwisko(String imie, String nazwisko);
 }
