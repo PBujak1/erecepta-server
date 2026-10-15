@@ -19,11 +19,10 @@ public interface LekarzRepository extends JpaRepository<Lekarz, Integer> {
     Optional<Lekarz> findByIdLekarza(Integer IdLekarza);
 
     @Query("""
-           SELECT l FROM Lekarz l
-           WHERE LOWER(CONCAT(l.imie, ' ', l.nazwisko)) LIKE LOWER(CONCAT('%', :fraza, '%'))
-              OR LOWER(CONCAT(l.nazwisko, ' ', l.imie)) LIKE LOWER(CONCAT('%', :fraza, '%'))
-           ORDER BY l.nazwisko, l.imie
-           """)
-    List<Lekarz> szukaj(@Param("fraza") String fraza, Pageable pageable);
-
+        SELECT l FROM Lekarz l
+        WHERE LOWER(CONCAT(l.imie, ' ', l.nazwisko)) LIKE LOWER(CONCAT('%', :fraza, '%'))
+        OR LOWER(CONCAT(l.nazwisko, ' ', l.imie)) LIKE LOWER(CONCAT('%', :fraza, '%'))
+        ORDER BY l.nazwisko, l.imie
+    """)
+    List<Lekarz> szukajLekarzy(@Param("fraza") String fraza, Pageable pageable);
 }

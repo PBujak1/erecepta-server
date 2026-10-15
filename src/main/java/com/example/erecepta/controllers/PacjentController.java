@@ -69,4 +69,11 @@ public class PacjentController {
             @RequestParam(defaultValue = "10") int limit) {
         return lekarzService.szukajLekarzy(fraza, limit);
     }
+
+    @GetMapping("/lekarze/specjalizacja/szukaj")
+    public List<SpecjalizacjaResponse> getSpecjalizacja(
+            @RequestParam String fraza,
+            @RequestParam(defaultValue = "10") int limit) {
+        return lekarzService.szukajSpecjalizacji(fraza, limit);
+    }
 }

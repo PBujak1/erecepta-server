@@ -39,5 +39,4 @@ public class LekarzResponse {
         this.imie = imie;
         this.nazwisko = nazwisko;
     }
-
 }
