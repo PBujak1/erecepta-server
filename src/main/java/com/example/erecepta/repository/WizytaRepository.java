@@ -8,4 +8,6 @@ import java.util.List;
 public interface WizytaRepository extends JpaRepository<Wizyta, Integer> {
 
     List<Wizyta> findByIDPacjenta(Integer IDPacjenta);
+
+    List<Wizyta> findByIDLekarza(Integer IDLekarza);
 }
