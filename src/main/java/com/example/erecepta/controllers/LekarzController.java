@@ -65,4 +65,11 @@ public class LekarzController {
                 .map(id -> ResponseEntity.ok(Map.of("idLekarza", id)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/{pesel}/danePacjenta")
+    public ResponseEntity<PacjentDaneResponse> getDanePacjenta(@PathVariable String pesel) {
+        return lekarzService.getDanePacjentaByPesel(pesel)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

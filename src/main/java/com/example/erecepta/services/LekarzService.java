@@ -20,6 +20,7 @@ public class LekarzService {
     private final ReceptaRepository receptaRepository;
     private final PacjentRepository pacjentRepository;
     private final LekRepository lekRepository;
+    private final AlergieRepository alergieRepository;
 
     public LekarzService(
             LekarzRepository lekarzRepository,
@@ -27,7 +28,8 @@ public class LekarzService {
             WizytaRepository wizytaRepository,
             ReceptaRepository receptaRepository,
             PacjentRepository pacjentRepository,
-            LekRepository lekRepository
+            LekRepository lekRepository,
+            AlergieRepository alergieRepository
     ) {
         this.lekarzRepository = lekarzRepository;
         this.specjalizacjaRepository = specjalizacjaRepository;
@@ -35,6 +37,7 @@ public class LekarzService {
         this.receptaRepository = receptaRepository;
         this.pacjentRepository = pacjentRepository;
         this.lekRepository = lekRepository;
+        this.alergieRepository = alergieRepository;
     }
 
     public Optional<LekarzResponse> getDaneLekarza(String imie, String nazwisko) {
@@ -210,5 +213,53 @@ public class LekarzService {
     public Optional<String> getIdLekarzaByPesel(String pesel) {
         return lekarzRepository.findByPesel(pesel)
                 .map(l -> String.valueOf(l.getIdLekarza()));
+    }
+
+    /*
+      Pobiera dane pacjenta (karta pacjenta) po peselu — dla widoku lekarza
+    */
+    public Optional<PacjentDaneResponse> getDanePacjentaByPesel(String pesel) {
+        return pacjentRepository.findByPesel(pesel)
+                .map(pacjent -> {
+                    List<WizytyResponse> wizyty = wizytaRepository
+                            .findByIDPacjenta(pacjent.getIdPacjenta())
+                            .stream()
+                            .map(w -> {
+                                String nazwaLekarza = lekarzRepository
+                                        .findByIdLekarza(w.getIDLekarza())
+                                        .map(l -> l.getImie() + " " + l.getNazwisko())
+                                        .orElse("Nieznany");
+
+                                String nrRecepty = w.getIDRecepty() != null
+                                        ? String.valueOf(w.getIDRecepty()) : null;
+
+                                String dataWizyty = w.getDataWizyty() != null
+                                        ? w.getDataWizyty().toString() : null;
+
+                                return new WizytyResponse(
+                                        dataWizyty,
+                                        nazwaLekarza,
+                                        nrRecepty
+                                );
+                            })
+                            .toList();
+
+                    List<String> alergie = alergieRepository
+                            .findByIDPacjenta(pacjent.getIdPacjenta())
+                            .stream()
+                            .map(a -> a.getNazwa())
+                            .toList();
+
+                    return new PacjentDaneResponse(
+                            pacjent.getImie(),
+                            pacjent.getNazwisko(),
+                            pacjent.getPesel() != null ? Integer.parseInt(pacjent.getPesel()) : null,
+                            pacjent.getWiek(),
+                            pacjent.getPlec(),
+                            pacjent.getAdres(),
+                            wizyty,
+                            alergie
+                    );
+                });
     }
 }
