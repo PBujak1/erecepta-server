@@ -12,12 +12,12 @@ public class Apteka {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     @Column (name = "IDApteki")
-    Integer idApteki;
+    private Integer idApteki;
 
     @Column (name = "Adres")
-    String adres;
+    private String adres;
 
     @Column (name = "NrKontaktu")
-    String numerTelefonu;
+    private String numerTelefonu;
 }
 
