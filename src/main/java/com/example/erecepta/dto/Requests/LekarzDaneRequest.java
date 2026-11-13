@@ -9,6 +9,7 @@ public class LekarzDaneRequest {
     private String pesel;
     private String imie;
     private String nazwisko;
+    private String nowyPesel;
     private String adres;
     private String telefon;
     private String email;

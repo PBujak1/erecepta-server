@@ -1,15 +1,17 @@
 package com.example.erecepta.services;
 
 import com.example.erecepta.dto.Requests.LekarzDaneRequest;
+import com.example.erecepta.dto.Requests.ReceptaRequest;
 import com.example.erecepta.dto.Responses.*;
-import com.example.erecepta.entity.Lekarz;
+import com.example.erecepta.entity.Lek;
+import com.example.erecepta.entity.Recepta;
 import com.example.erecepta.entity.Wizyta;
 import com.example.erecepta.repository.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -119,7 +121,7 @@ public class LekarzService {
                 .filter(w -> w.getIDRecepty() != null)
                 .flatMap(w -> receptaRepository.findByIDRecepty(w.getIDRecepty()).stream()
                         .map(r -> {
-                            String nazwaLeku = lekRepository.findLekByIDLeku(r.getIDLeku())
+                            String nazwaLeku = lekRepository.findLekByIdLeku(r.getIDLeku())
                                     .map(lek -> lek.getNazwa())
                                     .orElse("Nieznany");
 
@@ -208,6 +210,40 @@ public class LekarzService {
     }
 
     /*
+      Aktualizuje dane lekarza
+    */
+    public boolean aktualizujDaneLekarza(String pesel, LekarzDaneRequest request) {
+        return lekarzRepository.findByPesel(pesel)
+                .map(lekarz -> {
+                    if (request.getImie() != null)
+                        lekarz.setImie(request.getImie());
+                    if (request.getNazwisko() != null)
+                        lekarz.setNazwisko(request.getNazwisko());
+                    if (request.getNowyPesel() != null)
+                        lekarz.setPesel(request.getNowyPesel());
+                    if (request.getAdres() != null)
+                        lekarz.setAdres(request.getAdres());
+                    if (request.getEmail() != null)
+                        lekarz.setEmail(request.getEmail());
+                    if (request.getPlec() != null)
+                        lekarz.setPlec(request.getPlec());
+                    if (request.getTelefon() != null) {
+                        try {
+                            lekarz.setNumerTelefonu(Integer.parseInt(request.getTelefon()));
+                        } catch (NumberFormatException ignored) {}
+                    }
+                    if (request.getWiek() != null) {
+                        try {
+                            lekarz.setWiek(Integer.parseInt(request.getWiek()));
+                        } catch (NumberFormatException ignored) {}
+                    }
+                    lekarzRepository.save(lekarz);
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    /*
       Zwraca samo idLekarza po peselu.
      */
     public Optional<String> getIdLekarzaByPesel(String pesel) {
@@ -229,12 +265,8 @@ public class LekarzService {
                                         .findByIdLekarza(w.getIDLekarza())
                                         .map(l -> l.getImie() + " " + l.getNazwisko())
                                         .orElse("Nieznany");
-
-                                String nrRecepty = w.getIDRecepty() != null
-                                        ? String.valueOf(w.getIDRecepty()) : null;
-
-                                String dataWizyty = w.getDataWizyty() != null
-                                        ? w.getDataWizyty().toString() : null;
+                                String nrRecepty = w.getIDRecepty() != null ? String.valueOf(w.getIDRecepty()) : null;
+                                String dataWizyty = w.getDataWizyty() != null ? w.getDataWizyty().toString() : null;
 
                                 return new WizytyResponse(
                                         dataWizyty,
@@ -261,5 +293,51 @@ public class LekarzService {
                             alergie
                     );
                 });
+    }
+
+    /*
+        Dodanie recepty do bazy.
+        Przyjmuje PESEL pacjenta oraz dane recepty.
+        Zwraca false jeśli pacjent lub lekarz nie istnieje.
+     */
+    public boolean dodajRecepte(String pesel, ReceptaRequest request) {
+        // Walidacja: znajdź pacjenta po peselu
+        var pacjent = pacjentRepository.findByPesel(pesel);
+        if (pacjent.isEmpty()) {
+            return false;
+        }
+
+        // Walidacja: znajdź lekarza po peselu z requestu
+        var lekarz = lekarzRepository.findByPesel(request.getPeselLekarza());
+        if (lekarz.isEmpty()) {
+            return false;
+        }
+
+        // Znajdź lek po nazwie — jeśli nie istnieje, utwórz nowy wpis
+        Lek lek = lekRepository.findByNazwa(request.getNazwaLeku())
+                .orElseGet(() -> {
+                    Lek nowyLek = new Lek();
+                    nowyLek.setNazwa(request.getNazwaLeku());
+                    return lekRepository.save(nowyLek);
+                });
+
+        // Utwórz i zapisz receptę
+        Recepta recepta = new Recepta();
+        recepta.setIDPacjenta(pacjent.get().getIdPacjenta());
+        recepta.setIDLeku(lek.getIdLeku());
+        recepta.setLiczbaOpakowan(request.getLiczbaOpakowan());
+        recepta.setCzyRefundowany(request.getOdplatnosc());
+        recepta.setDawkowanie(request.getDawkowanie());
+        Recepta zapisanaRecepta = receptaRepository.save(recepta);
+
+        // Utwórz wizytę łączącą lekarza, pacjenta i receptę
+        Wizyta wizyta = new Wizyta();
+        wizyta.setIDLekarza(lekarz.get().getIdLekarza());
+        wizyta.setIDPacjenta(pacjent.get().getIdPacjenta());
+        wizyta.setIDRecepty(zapisanaRecepta.getIDRecepty());
+        wizyta.setDataWizyty(LocalDate.now());
+        wizytaRepository.save(wizyta);
+
+        return true;
     }
 }

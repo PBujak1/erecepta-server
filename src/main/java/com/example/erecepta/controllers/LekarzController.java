@@ -1,6 +1,7 @@
 package com.example.erecepta.controllers;
 
 import com.example.erecepta.dto.Requests.LekarzDaneRequest;
+import com.example.erecepta.dto.Requests.ReceptaRequest;
 import com.example.erecepta.dto.Responses.*;
 import com.example.erecepta.services.LekarzService;
 import org.springframework.http.ResponseEntity;
@@ -71,5 +72,21 @@ public class LekarzController {
         return lekarzService.getDanePacjentaByPesel(pesel)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{pesel}/aktualizuj")
+    public ResponseEntity<Map<String, String>> aktualizacjaDanych(@PathVariable String pesel, @RequestBody LekarzDaneRequest request) {
+        if (lekarzService.aktualizujDaneLekarza(pesel, request)) {
+            return ResponseEntity.ok(Map.of("status", "success"));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{pesel}/dodajRecepte")
+    public ResponseEntity<Map<String, String>> dodanieRecepty(@PathVariable String pesel, @RequestBody ReceptaRequest request) {
+        if (lekarzService.dodajRecepte(pesel, request)) {
+            return ResponseEntity.ok(Map.of("status", "success"));
+        }
+        return ResponseEntity.notFound().build();
     }
 }

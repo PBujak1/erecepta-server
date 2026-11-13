@@ -9,15 +9,15 @@ import lombok.Setter;
 @Setter
 @Table(name = "lek")
 public class Lek {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDLeku")
-    private Integer IDLeku;
+    private Integer idLeku;
 
     @Column(name = "IDRodzaju")
-    private Integer IDRodzaju;
+    private Integer idRodzaju;
 
     @Column(name = "Nazwa")
-    private String Nazwa;
-
+    private String nazwa;
 }

@@ -43,7 +43,7 @@ public class Lekarz {
     private String plec;
 
     @Lob
-    @Column(name = "avatar")
+    @Column(name = "avatar", columnDefinition = "LONGBLOB")
     private byte[] avatar;
 
     @Column(name = "idspecjalizacji")

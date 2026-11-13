@@ -23,7 +23,7 @@ public class ReceptaService {
         List<Recepta> recepty = receptaRepository.findByIDPacjenta(pacjentIdByPesel);
 
         return recepty.stream()
-                .map(recepta -> lekRepository.findLekByIDLeku(recepta.getIDLeku())
+                .map(recepta -> lekRepository.findLekByIdLeku(recepta.getIDLeku())
                         .map(lek -> new ReceptaResponse(
                             lek.getNazwa(),
                             recepta.getLiczbaOpakowan().toString(),

@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface LekRepository extends JpaRepository<Lek, Integer> {
 
-    Optional<Lek> findLekByIDLeku(Integer idLeku);
+    Optional<Lek> findByNazwa(String nazwa);
+
+    Optional<Lek> findLekByIdLeku(Integer idLeku);
 }
