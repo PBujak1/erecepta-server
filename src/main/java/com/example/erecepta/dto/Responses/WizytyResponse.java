@@ -3,7 +3,7 @@ package com.example.erecepta.dto.Responses;
 public class WizytyResponse {
     private String dataWizyty;
     private String nazwaLekarza;
-    private String nrRecepty;
+    private String dataWystawienia;
 
     public WizytyResponse() {
     }
@@ -15,7 +15,7 @@ public class WizytyResponse {
     ) {
         this.dataWizyty = dataWizyty;
         this.nazwaLekarza = nazwaLekarza;
-        this.nrRecepty = nrRecepty;
+        this.dataWystawienia = nrRecepty;
     }
 
     public String getDataWizyty() {
@@ -34,11 +34,11 @@ public class WizytyResponse {
         this.nazwaLekarza = nazwaLekarza;
     }
 
-    public String getNrRecepty() {
-        return nrRecepty;
+    public String getDataWystawienia() {
+        return dataWystawienia;
     }
 
-    public void setNrRecepty(String nrRecepty) {
-        this.nrRecepty = nrRecepty;
+    public void setDataWystawienia(String dataWystawienia) {
+        this.dataWystawienia = dataWystawienia;
     }
 }

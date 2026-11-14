@@ -1,8 +1,11 @@
 package com.example.erecepta.entity;
 
+import com.example.erecepta.entity.enums.StatusRecepty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -13,20 +16,21 @@ public class Recepta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDRecepty")
-    Integer IDRecepty;
+    private Integer IDRecepty;
 
-    @Column(name = "IDLeku")
-    Integer IDLeku;
+    @Column(name = "IDWizyty")
+    private Integer IDWizyty;
 
-    @Column(name = "IDPacjenta")
-    Integer IDPacjenta;
+    @Column (name = "DataWystawienia")
+    private LocalDate DataWystawienia;
 
-    @Column(name = "LiczbaOpakowan")
-    Integer LiczbaOpakowan;
+    @Column(name = "DataWaznosci")
+    private LocalDate DataWaznosci;
 
-    @Column(name = "CzyRefundowany")
-    Integer CzyRefundowany;
+    @Column(name = "KodDostepu")
+    private String KodDostepu;
 
-    @Column(name = "Dawkowanie")
-    Integer Dawkowanie;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Status")
+    private StatusRecepty Status;
 }

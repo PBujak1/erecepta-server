@@ -4,6 +4,8 @@ import com.example.erecepta.dto.Requests.LekarzDaneRequest;
 import com.example.erecepta.dto.Requests.ReceptaRequest;
 import com.example.erecepta.dto.Responses.*;
 import com.example.erecepta.services.LekarzService;
+import com.example.erecepta.services.PacjentService;
+import com.example.erecepta.services.ReceptaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +17,13 @@ import java.util.Map;
 public class LekarzController {
 
     private final LekarzService lekarzService;
+    private final ReceptaService receptaService;
+    private final PacjentService pacjentService;
 
-    public LekarzController(LekarzService lekarzService) {
+    public LekarzController(LekarzService lekarzService, ReceptaService receptaService, PacjentService pacjentService) {
         this.lekarzService = lekarzService;
+        this.receptaService = receptaService;
+        this.pacjentService = pacjentService;
     }
 
     @GetMapping("/{dane}/daneLekarza")
@@ -40,7 +46,7 @@ public class LekarzController {
 
     @GetMapping("/{idLekarza}/recepty")
     public ResponseEntity<List<ReceptaLekarzResponse>> getReceptyLekarza(@PathVariable Integer idLekarza) {
-        return lekarzService.getReceptyLekarza(idLekarza)
+        return receptaService.getReceptyLekarza(idLekarza)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -69,7 +75,7 @@ public class LekarzController {
 
     @GetMapping("/{pesel}/danePacjenta")
     public ResponseEntity<PacjentDaneResponse> getDanePacjenta(@PathVariable String pesel) {
-        return lekarzService.getDanePacjentaByPesel(pesel)
+        return pacjentService.getDanePacjentaByPesel(pesel)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -84,7 +90,7 @@ public class LekarzController {
 
     @PutMapping("/{pesel}/dodajRecepte")
     public ResponseEntity<Map<String, String>> dodanieRecepty(@PathVariable String pesel, @RequestBody ReceptaRequest request) {
-        if (lekarzService.dodajRecepte(pesel, request)) {
+        if (receptaService.dodajRecepte(pesel, request)) {
             return ResponseEntity.ok(Map.of("status", "success"));
         }
         return ResponseEntity.notFound().build();

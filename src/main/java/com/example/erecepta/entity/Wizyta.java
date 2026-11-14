@@ -26,9 +26,6 @@ public class Wizyta {
     @Column(name = "IDPacjenta")
     private Integer IDPacjenta;
 
-    @Column(name = "IDRecepty")
-    private Integer IDRecepty;
-
     public Wizyta() {
     }
 }

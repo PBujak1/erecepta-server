@@ -76,9 +76,7 @@ public class WizytaService {
 
                             pacjent.map(p ->
                                     p.getImie() + " " + p.getNazwisko()
-                            ).orElse(null),
-
-                            wizyta.getIDRecepty()
+                            ).orElse(null)
                     );
                 })
                 .toList();
@@ -102,9 +100,7 @@ public class WizytaService {
 
                             pacjent.map(p ->
                                     p.getImie() + " " + p.getNazwisko()
-                            ).orElse(null),
-
-                            wizyta.getIDRecepty()
+                            ).orElse(null)
                     );
                 })
                 .toList();

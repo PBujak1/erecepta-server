@@ -11,7 +11,6 @@ public class HistoriaPacjentaResponse {
     private LocalDate dataWizyty;
     private String nazwaLekarza;
     private String nazwaPacjenta;
-    private Integer nrRecepty;
 
     public HistoriaPacjentaResponse() {
     }
@@ -23,12 +22,10 @@ public class HistoriaPacjentaResponse {
     public HistoriaPacjentaResponse(
             LocalDate dataWizyty,
             String nazwaLekarza,
-            String nazwaPacjenta,
-            Integer idRecepty)
-    {
+            String nazwaPacjenta
+) {
         this.dataWizyty = dataWizyty;
         this.nazwaLekarza = nazwaLekarza;
         this.nazwaPacjenta = nazwaPacjenta;
-        this.nrRecepty = idRecepty;
     }
 }
