@@ -6,10 +6,7 @@ import com.example.erecepta.dto.Responses.WizytaResponse;
 import com.example.erecepta.entity.Lekarz;
 import com.example.erecepta.entity.Pacjent;
 import com.example.erecepta.entity.Wizyta;
-import com.example.erecepta.repository.LekarzRepository;
-import com.example.erecepta.repository.PacjentRepository;
-import com.example.erecepta.repository.ReceptaRepository;
-import com.example.erecepta.repository.WizytaRepository;
+import com.example.erecepta.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,12 +20,14 @@ public class WizytaService {
     private final LekarzRepository lekarzRepository;
     private final PacjentRepository pacjentRepository;
     private final ReceptaRepository receptaRepository;
+    private final ReceptaPozycjaRepository receptaPozycjaRepository;
 
-    public WizytaService(WizytaRepository wizytaRepository, LekarzRepository lekarzRepository, PacjentRepository pacjentRepository, ReceptaRepository receptaRepository) {
+    public WizytaService(WizytaRepository wizytaRepository, LekarzRepository lekarzRepository, PacjentRepository pacjentRepository, ReceptaRepository receptaRepository, ReceptaPozycjaRepository receptaPozycjaRepository) {
         this.wizytaRepository = wizytaRepository;
         this.lekarzRepository = lekarzRepository;
         this.pacjentRepository = pacjentRepository;
         this.receptaRepository = receptaRepository;
+        this.receptaPozycjaRepository = receptaPozycjaRepository;
     }
 
     public List<WizytaResponse> getWizytyPacjenta(Integer idPacjenta) {
@@ -68,6 +67,15 @@ public class WizytaService {
                     Optional<Lekarz> lekarz = lekarzRepository.findByIdLekarza(wizyta.getIDLekarza());
                     Optional<Pacjent> pacjent = pacjentRepository.findByIdPacjenta(wizyta.getIDPacjenta());
 
+                    String idPozycji = receptaRepository
+                            .findByIDWizyty(wizyta.getIDWizyty())
+                            .flatMap(r -> receptaPozycjaRepository
+                                    .findByIdRecepty(r.getIDRecepty())
+                                    .stream()
+                                    .findFirst())
+                            .map(p -> String.valueOf(p.getIdPozycji()))
+                            .orElse(null);
+
                     return new HistoriaPacjentaResponse(
                             wizyta.getDataWizyty(),
                             lekarz.map(l ->
@@ -76,7 +84,8 @@ public class WizytaService {
 
                             pacjent.map(p ->
                                     p.getImie() + " " + p.getNazwisko()
-                            ).orElse(null)
+                            ).orElse(null),
+                            idPozycji
                     );
                 })
                 .toList();

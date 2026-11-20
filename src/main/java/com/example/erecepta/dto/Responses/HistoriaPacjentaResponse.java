@@ -11,6 +11,7 @@ public class HistoriaPacjentaResponse {
     private LocalDate dataWizyty;
     private String nazwaLekarza;
     private String nazwaPacjenta;
+    private String idPozycji;
 
     public HistoriaPacjentaResponse() {
     }
@@ -27,5 +28,12 @@ public class HistoriaPacjentaResponse {
         this.dataWizyty = dataWizyty;
         this.nazwaLekarza = nazwaLekarza;
         this.nazwaPacjenta = nazwaPacjenta;
+    }
+
+    public HistoriaPacjentaResponse(LocalDate dataWizyty, String nazwaLekarza, String nazwaPacjenta, String idPozycji) {
+        this.dataWizyty = dataWizyty;
+        this.nazwaLekarza = nazwaLekarza;
+        this.nazwaPacjenta = nazwaPacjenta;
+        this.idPozycji = idPozycji;
     }
 }
