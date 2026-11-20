@@ -119,10 +119,11 @@ public class LekarzService {
     /*
       Pobiera historię wizyt lekarza.
     */
-    public Optional<List<HistoriaLekarzaResponse>> getHistoriaLekarza(Integer idLekarza) {
-        return lekarzRepository.findByIdLekarza(idLekarza)
+    public Optional<List<HistoriaLekarzaResponse>> getHistoriaLekarza(Integer pesel) {
+        return lekarzRepository.findByPesel(pesel.toString())
                 .map(lekarz -> {
                     String nazwaLekarza = lekarz.getImie() + " " + lekarz.getNazwisko();
+                    Integer idLekarza = lekarz.getIdLekarza();
                     return wizytaRepository.findByIDLekarza(idLekarza).stream()
                             .map(w -> {
                                 String nazwaPacjenta = pacjentRepository.findByIdPacjenta(w.getIDPacjenta())
@@ -131,10 +132,14 @@ public class LekarzService {
 
                                 String dataWizyty = w.getDataWizyty() != null ? w.getDataWizyty().toString() : null;
 
-                                String idRecepty = String.valueOf(lekarzRepository
-                                        .findByIdLekarza(w.getIDLekarza())
-                                        .map(l -> l.getIdLekarza())
-                                        .orElse(null));
+                                String idPozycji = receptaRepository
+                                        .findByIDWizyty(w.getIDWizyty())
+                                        .flatMap(r -> receptaPozycjaRepository
+                                                .findByIdRecepty(r.getIDRecepty())
+                                                .stream()
+                                                .findFirst())
+                                        .map(p -> String.valueOf(p.getIdPozycji()))
+                                        .orElse(null);
 
                                 return new HistoriaLekarzaResponse(
                                         String.valueOf(w.getIDWizyty()),
@@ -143,7 +148,7 @@ public class LekarzService {
                                         String.valueOf(idLekarza),
                                         nazwaPacjenta,
                                         w.getIDPacjenta() != null ? String.valueOf(w.getIDPacjenta()) : null,
-                                        idRecepty
+                                        idPozycji
                                 );
                             })
                             .toList();

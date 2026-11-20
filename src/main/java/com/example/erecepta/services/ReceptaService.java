@@ -89,7 +89,6 @@ public class ReceptaService {
                                     : (w.getDataWizyty() != null ? w.getDataWizyty().toString() : null);
                             String idPacjenta = w.getIDPacjenta() != null
                                     ? String.valueOf(w.getIDPacjenta()) : null;
-                            String idRecepty = String.valueOf(recepta.getIDRecepty());
 
                             return receptaPozycjaRepository.findByIdRecepty(recepta.getIDRecepty())
                                     .stream()
@@ -97,12 +96,13 @@ public class ReceptaService {
                                         String nazwaLeku = lekRepository.findLekByIdLeku(p.getIdLeku())
                                                 .map(Lek::getNazwa)
                                                 .orElse("Nieznany");
+                                        String idPozycji = String.valueOf(p.getIdPozycji());
 
                                         String odplatnosc = p.getRefundacja() != null && p.getRefundacja() == 1
                                                 ? "Refundowany" : "100%";
 
                                         return new ReceptaLekarzResponse(
-                                                idRecepty,
+                                                idPozycji,
                                                 nazwaLeku,
                                                 idPacjenta,
                                                 p.getLiczbaOpakowan() != null ? String.valueOf(p.getLiczbaOpakowan()) : null,

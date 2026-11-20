@@ -95,7 +95,7 @@ public class PacjentService {
                     return new PacjentDaneResponse(
                             pacjent.getImie(),
                             pacjent.getNazwisko(),
-                            pacjent.getPesel() != null ? Integer.parseInt(pacjent.getPesel()) : null,
+                            pacjent.getPesel() != null ? pacjent.getPesel() : null,
                             pacjent.getWiek(),
                             pacjent.getPlec(),
                             pacjent.getAdres(),
